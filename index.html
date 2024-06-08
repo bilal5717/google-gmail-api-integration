@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Gmail API Quickstart</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="./gmail-interface/styles.css">
+        <link rel="stylesheet" href="./gmail-interface/styles-timeline.css">
+        <link rel="stylesheet" href="./gmail-interface/timeline-centered.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <!--Add buttons to initiate auth sequence and sign out-->
+        <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+        <button id="authorize_button" onclick="handleAuthClick()" style="display: none;">Authorize</button>
+
+        <!-- partial:index.partial.html -->
+        <div class="gmail-page">
+            <div class="tab-bar">
+
+                <div class="left">
+                    <div class="logo-wrapper">
+                        <img src="./gmail-interface/svg/logo.svg" class="svg-images">
+                        <p>Gmail</p>
+                    </div>
+                    <!-- serach Box -->
+                    <div class="search-area">
+                        <button id="search-button">
+                            <img src="./gmail-interface/svg/search-icon.svg" class="svg-images">
+                        </button>
+                        <input type="text" id="search-input" placeholder="Search...">
+
+                        <button>
+                            <img src="./gmail-interface/svg/search-dropdown.svg" class="svg-images">
+                        </button>
+                    </div>
+                    
+                </div>
+                <div class="right">
+                    <button>
+                        <img src="./gmail-interface/svg/apps.svg" class="svg-images">
+                    </button>
+                    <button>
+                        <img src="./gmail-interface/svg/bell-icon.svg" class="svg-images">
+                    </button>
+                    <button id="profile-image">
+                        <img src="./gmail-interface/svg/logo-3.svg" height="34" width="34" class="svg-images">
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="page-content">
+                <div class="side-bar">
+                    <div class="side-bar-content">
+                        <div class="button-wrapper">
+                            <button class="compose-button">
+                                <img src="https://i.ibb.co/6nk5kzD/Screen-Shot-2018-05-18-at-12-07-42-PM.png" alt="">
+                                <p>COMPOSE</p>
+                            </button>
+                        </div>
+                        <div class="side-bar-items">
+                            <div class="section">
+                                <input class="nav-item" name="nav" type="radio" id="inbox" checked="">
+                                <input class="nav-item" name="nav" type="radio" id="starred">
+                                <input class="nav-item" name="nav" type="radio" id="snoozed">
+                                <input class="nav-item" name="nav" type="radio" id="sent">
+                                <input class="nav-item" name="nav" type="radio" id="draft">
+                                <input class="nav-item" name="nav" type="radio" id="spam">
+                                <input class="nav-item" name="nav" type="radio" id="trash">
+                                <div class="item-wrapper" onclick="inboxTimeline('inbox')">
+                                    <label for="inbox">
+                                        <img src="./gmail-interface/svg/inbox-icon.svg" class="svg-images">
+                                        <div class="item-info">
+                                            <p>Inbox</p>
+                                            <p id="inbox-count">2</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper" onclick="inboxTimeline('starred')">
+                                    <label for="starred">
+                                        <img src="./gmail-interface/svg/starr.svg" class="svg-images">
+                                        <div class="item-info">
+                                            <p>Starred</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="snoozed">
+                                        <img src="./gmail-interface/svg/snoozed.svg" class="svg-images">
+                                        <div class="item-info">
+                                            <p>Snoozed</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper" onclick="inboxTimeline('sent')">
+                                    <label for="sent">
+                                        <img src="./gmail-interface/svg/sent.svg" class="svg-images">
+                                        <div class="item-info">
+                                            <p>Sent</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                
+                                
+                                <div class="item-wrapper">
+                                    <label for="draft">
+                                        <img src="./gmail-interface/svg/draft.svg" class="svg-images">
+                                        <div class="item-info">
+                                            <p>Draft</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="spam">
+                                        <img src="./gmail-interface/svg/spam.svg" class="svg-images">
+                                        <div class="item-info">
+                                            <p>Spam</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="trash">
+                                        <img src="./gmail-interface/svg/trash.svg" class="svg-images">
+                                        <div class="item-info">
+                                            <p>Trash</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            
+                            <hr class="section-break">
+                            <div class="section">
+                                <input class="folder-nav-item" name="folder-nav-item" type="radio" id="clients">
+                                <input class="folder-nav-item" name="folder-nav-item" type="radio" id="expenses"
+                                    checked="">
+                                <input class="folder-nav-item" name="folder-nav-item" type="radio" id="reports">
+                                <input class="folder-nav-item" name="folder-nav-item" type="radio" id="team">
+                                <input class="folder-nav-item" name="folder-nav-item" type="radio" id="travels">
+                                <div class="section-header">
+                                    <p>FOLDERS</p>
+                                    <img src="./gmail-interface/svg/folders.svg" class="svg-images">
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="clients">
+                                        <img src="./gmail-interface/svg/clients.svg" class="svg-images">
+
+                                        <img src="./gmail-interface/svg/clients-2.svg" class="svg-images">
+                                        <p class="item-name">Clients</p>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="expenses">
+                                        <img src="./gmail-interface/svg/expenses.svg" class="svg-images">
+                                        <p class="item-name">Expenses</p>
+                                        <span>4</span>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="reports">
+                                        <img src="./gmail-interface/svg/reports.svg" class="svg-images">
+                                        <p class="item-name">Reports</p>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="team">
+                                        <img src="./gmail-interface/svg/team-1.svg" class="svg-images">
+
+                                        <img src="./gmail-interface/svg/team-2.svg" class="svg-images">
+                                        <p class="item-name">Team</p>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="travels">
+                                        <img src="./gmail-interface/svg/travels.svg" class="svg-images">
+                                        <p class="item-name">Travels</p>
+                                    </label>
+                                </div>
+                            </div>
+                            <hr class="section-break">
+                            <div class="section">
+                                <input class="bottom-nav" name="bottom-nav" type="radio" id="settings">
+                                <input class="bottom-nav" name="bottom-nav" type="radio" id="help">
+                                <div class="item-wrapper">
+                                    <label for="settings">
+                                        <img src="./gmail-interface/svg/settings.svg" class="svg-images">
+                                        <p class="item-name">Settings</p>
+                                    </label>
+                                </div>
+                                <div class="item-wrapper">
+                                    <label for="help">
+                                        <img src="./gmail-interface/svg/help.svg" class="svg-images">
+                                        <p class="item-name">Help &amp; Feedback</p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="side-bar-bottom">
+                        <input class="bottom-logo" name="bottom-logo" type="radio" id="logo-1" checked="">
+                        <input class="bottom-logo" name="bottom-logo" type="radio" id="logo-2">
+                        <input class="bottom-logo" name="bottom-logo" type="radio" id="logo-3">
+                        <div class="label-wrapper">
+                            <label for="logo-1">
+                                <img src="./gmail-interface/svg/logo-1.svg" class="svg-images">
+                            </label>
+                        </div>
+                        <div class="label-wrapper">
+                            <label for="logo-2">
+                                <img src="./gmail-interface/svg/logo-2.svg" class="svg-images">
+                            </label>
+                        </div>
+                        <div class="label-wrapper">
+                            <label for="logo-3">
+                                <img src="./gmail-interface/svg/logo-3.svg" class="svg-images">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <!-- > Inbox Timeline -->
+                <div class="box inbox-timeline-container">
+                    <div id="loader" class="inbox-timeline-loader"></div>
+
+                    <ul class="inbox-timeline" id="first-list">
+                        
+                    </ul>
+
+                    <div class="arrow inboxTimelineLoadmore" id="btn1" style="display: none;">
+                        <img src="./gmail-interface/svg/timeline-loadmore.svg" class="svg-images">
+                    </div> 
+
+                    <!--Sample Timeline item for main inbox-->
+                    <div id="sample-inbox-timeline" style="display: none;">
+                        <li>
+                            <span></span>
+                            <div class="timeline-content">
+                                <span class="star-icon">
+                                    <img src="./gmail-interface/svg/starr.svg" class="svg-images" alt="star icon">
+                                </span>
+                                <div class="title">comment #01</div>
+                                <div class="To" style="clear: both;"></div>
+                                <div class="name" style="clear: both;">- dr. mohamed -</div>
+                                <div class="time">
+                                    <span class="dateString">JUN, 17<sup>th</sup></span>
+                                    <span class="timeString">12:00 AM</span>
+                                </div>
+                                <div class="info-container" style="display: none;">
+                                    <div class="info">the best animation, the best tutorials you would ever see.</div>
+                                    <button class="read-more">Read More</button>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                
+                    
+                    <!-- Starred folder -->
+                    <div id="starred-folder" class="folder">
+                        <!-- Folder content -->
+                    </div>
+
+                    
+                </div>
+
+
+
+
+
+                <!--Conversation Area-->
+                <div class="conversation" style="display: none; width: 80%;">
+                    <div id="timeline-loader"></div>
+                    <div class="subject-bar">
+
+                        <div class="header">
+
+                            <p>Full conversation</p>
+
+                            <div class="header-buttons">
+
+                                <div class="header-button inbox" style="cursor: pointer;" onclick="toogleConversation('hide')">
+                                    
+                                        
+                                    <p>Close Conversation</p> 
+                                    
+                                    
+                                    <button>
+                                        <img src="./gmail-interface/svg/close.svg" class="svg-images">
+                                    </button>
+
+                                </div>
+                                
+
+                                <div class="header-button inbox" style="cursor: pointer;" id="reply-button">
+                                 
+                                    <p>Reply</p>
+                                    <button>
+                                        <img src="./gmail-interface/svg/close.svg" class="svg-images">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mail-area">
+                        <div class="content-wrapper">
+
+                            <div id="conversation-profile-pic" class="profile-pic">
+                                <img src="./gmail-interface/svg/logo-3.svg" height="34" width="34" class="svg-images">
+                            </div>
+                            
+                            <div class="mail-content-wrapper" id="conversation-messages-all">
+                                
+                                <!-- centered timeline -->
+                                <div class="container centered-timeline">
+                                    
+                                </div>
+
+                                <!-- Sample timeline entry for loop -->
+                                <div id="sample-timeline-entry" style="display: none;">
+                                    <div class="timeline-block timeline-block-left">
+                                        <img class="profile-picture" src="./gmail-interface/svg/logo-3.svg" alt="Profile Picture" height="34" width="34">
+                                        <div class="timeline-content">
+                                            <h3>
+                                                <span class="dateString">DATE</span>
+                                                <span class="timeString">TIME</span>
+                                            </h3>
+                                            <span class="spanTagline">Some work experience</span>
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
+                                            </p>
+                                            <a href="javascript:;" class="read-full-message" data-message-id="">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+
+                                <!-- Load More for timeline-->
+                                <div>
+                                    <div id="loadmore-conversation" style="width: 110px;border: 1px solid;margin: 0 auto;text-align: center;padding: 5px;margin-top: 10px; display: none;">
+                                        <div class="header-button inbox" id="conversation-loadmore" style="cursor: pointer;">
+                                            <p>Load More</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="mail-content-wrapper" id="conversation-full-message" style="display: none;">
+                                <div>
+                                    <button class="full-message-close" onclick="closeSingleMessage()"> 
+                                        <img src="./gmail-interface/svg/close.svg" class="svg-images">
+                                    </button>
+                                </div>
+                                <div class="full-message-container" id="full-message-container">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+
+                <!-- Email composition UI -->
+                <div class="compose-container">
+                    <div class="compose-header">
+                        <span>New Message</span>
+                        <div>
+                            <span class="minimize">-</span>
+                            <span class="close">x</span>
+                        </div>
+                    </div>
+                    <div class="compose-body">
+                        <div class="input-group">
+                            <label for="to">To:</label>
+                            <input type="text" id="to" class="compose-input" placeholder="To">
+                        </div>
+                        <div class="input-group">
+                            <label for="subject">Subject:</label>
+                            <input type="text" id="subject" class="compose-input" placeholder="Subject">
+                        </div>
+                        <textarea id="email-body" class="compose-textarea" rows="10" placeholder="Email Text"></textarea>
+                        <button id="send_button" class="compose-button send-button">Send</button>
+                    </div>
+                </div>
+                
+                
+                <!-- reply UI -->
+                <div class="reply-container" id="reply-container">
+                    <div class="reply-header">
+                        <span>Reply</span>
+                        <div>
+                            <span class="close" id="close">x</span>
+                        </div>
+                    </div>
+                    <div class="reply-body">
+                        <button>
+                            <span class="add-sender" id="add-sender">Add more</span>
+                        </button>
+                        <textarea id="email-body" class="compose-textarea" rows="10" placeholder="Email Text"></textarea>
+                        <button id="reply-btn" class="reply-button">Send</button>
+                    </div>
+                </div>
+                
+                
+
+                <div class="other-services">
+                    <div class="services-top">
+                        <button>
+                            <img src="./gmail-interface/svg/service-1.svg" class="svg-images">
+                        </button>
+                        <button>
+                            <img src="./gmail-interface/svg/service-2.svg" class="svg-images">
+                        </button>
+                        <button>
+                            <img src="./gmail-interface/svg/service-3.svg" class="svg-images">
+                        </button>
+                        <hr class="section-break">
+                        <button>
+                            <img src="./gmail-interface/svg/service-4.svg" class="svg-images">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a id="download-attach" download="filename"/>
+
+        <!-- Application Scripts -->
+        <script type="text/javascript" src="./scripts.js"></script>
+
+
+        <!-- Google Libraries & Client -->
+        <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+        <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+    </body>
+
+</html>

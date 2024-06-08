@@ -1,0 +1,142 @@
+.container {
+    width: 80%;
+    padding: 50px 0;
+    margin: 50px auto;
+    position: relative;
+    overflow: hidden;
+ }
+ 
+ .container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -1px;
+    width: 2px;
+    height: 100%;
+    background: #CCD1D9;
+    z-index: 1
+ }
+ 
+ .timeline-block {
+    width: calc(50% + 8px);
+    display: flex;
+    justify-content: space-between;
+    clear: both;
+    margin-top: 40px;
+ }
+ 
+ .timeline-block-right {
+    float: right;
+ }
+ 
+ .timeline-block-left {
+    float: left;
+    direction: rtl
+ }
+ 
+ .marker {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #F5F7FA;
+    background: #4FC1E9;
+    margin-top: 10px;
+    z-index: 9999
+ }
+ 
+ .timeline-content {
+    width: 95%;
+    padding: 0 15px;
+    color: #666;
+    /* line-height: 25px; */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+ }
+ 
+ .timeline-content h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 500
+ }
+
+ .timeline-block-right h3 {
+    display: block;
+    margin-left: -200px;
+ }
+
+ .timeline-block-left h3 {
+    display: block;
+    margin-right: -200px;
+ }
+ 
+ .timeline-content .spanTagline {
+    font-size: 18px;
+    color: #50c2e9;
+    margin-top: -30px;
+    display: block;
+ }
+ 
+ .timeline-content p {
+    font-size: 14px;
+    line-height: 1.5em;
+    word-spacing: 1px;
+    color: #888;
+ }
+ 
+ .timeline-content a.read-full-message {
+   color: #50c2e9;
+}
+.full-message-close {
+   background: #e8e9e9;
+   display: inline-block;
+   padding: 5px;
+}
+/* CSS for read status symbol */
+.read-status {
+   color: red; /* Change color as needed */
+   font-size: 25px; 
+   font-weight: bold;
+}
+
+.profile-picture{
+   border-radius: 20px;
+   z-index: 1;
+ }
+
+.timeline-block-right > .profile-picture {
+   margin-left: -10px;
+}
+
+.timeline-block-left > .profile-picture {
+   margin-right: -10px;
+}
+
+
+ @media screen and (max-width: 768px) {
+    .container:before {
+       left: 8px;
+       width: 2px;
+    }
+    .timeline-block {
+       width: 100%;
+       margin-bottom: 30px;
+    }
+    .timeline-block-right {
+       float: none;
+    }
+ 
+    .timeline-block-left {
+       float: none;
+       direction: ltr;
+    }
+ }
+
+
+
+
+
+ 
